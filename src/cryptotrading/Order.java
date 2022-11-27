@@ -7,7 +7,7 @@ package cryptotrading;
 public class Order {
     int idNumber;
     boolean buyOrSell;
-    int cryptos;
+    double cryptos;
     int limit;
     int entryTime;
     int eventTime;

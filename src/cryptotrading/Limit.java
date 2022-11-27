@@ -11,6 +11,5 @@ public class Limit {
     Limit parent ;
     Limit leftChild ;
     Limit rightChild ;
-    Order headOrder ;
-    Order tailOrder ;
+    OrderList order ;
 }

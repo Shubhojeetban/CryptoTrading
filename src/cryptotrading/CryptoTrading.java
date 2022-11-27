@@ -198,41 +198,33 @@ public class CryptoTrading {
               LimitTree limit = new LimitTree();
               
               Limit l1 = new Limit();
-              l1.headOrder = null;
               l1.leftChild = null;
               l1.rightChild = null;
               l1.parent = null;
-              l1.tailOrder = null;
               l1.size = 0;
               l1.limitPrice = 0.3;
               l1.totalVolume = 0.2;
               
               Limit l2 = new Limit();
-              l2.headOrder = null;
               l2.leftChild = null;
               l2.rightChild = null;
               l2.parent = null;
-              l2.tailOrder = null;
               l2.size = 0;
               l2.limitPrice = 0.2;
               l2.totalVolume = 0.2;
               
               Limit l3 = new Limit();
-              l3.headOrder = null;
               l3.leftChild = null;
               l3.rightChild = null;
               l3.parent = null;
-              l3.tailOrder = null;
               l3.size = 0;
               l3.limitPrice = 0.5;
               l3.totalVolume = 0.2;
               
               Limit l4 = new Limit();
-              l4.headOrder = null;
               l4.leftChild = null;
               l4.rightChild = null;
               l4.parent = null;
-              l4.tailOrder = null;
               l4.size = 0;
               l4.limitPrice = 0.4;
               l4.totalVolume = 0.2;

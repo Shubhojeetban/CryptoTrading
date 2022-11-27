@@ -125,8 +125,7 @@ public class LimitTree {
             Limit inOrderSuccessor = minValue(root.rightChild);
             root.limitPrice = inOrderSuccessor.limitPrice;
             root.totalVolume = inOrderSuccessor.totalVolume;
-            root.headOrder = inOrderSuccessor.headOrder;
-            root.tailOrder = inOrderSuccessor.tailOrder;
+            root.order = inOrderSuccessor.order;
             root.rightChild = deleteRec(root.rightChild, root.limitPrice);
         }
 
@@ -138,14 +137,6 @@ public class LimitTree {
             root = root.leftChild;
         }
         return root;
-    }
-
-    public Limit getMaximumLimit() {
-        return highestLimit;
-    }
-
-    public Limit getMinimumLimt() {
-        return smallestLimit;
     }
 
     public List<Limit> getAllLimitsInAsc() {

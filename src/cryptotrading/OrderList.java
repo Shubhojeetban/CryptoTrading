@@ -1,4 +1,4 @@
-package cryptotrading;
+ package cryptotrading;
 
 /**
  *
@@ -36,18 +36,22 @@ public class OrderList {
         if (order == headOrder) {
             headOrder = headOrder.nextOrder;
             headOrder.prevOrder = null;
-            headOrder.parentLimit.headOrder = headOrder;
+            //headOrder.parentLimit.headOrder = headOrder;
             return 1;
         }
         if (order == tailOrder) {
             tailOrder = tailOrder.prevOrder;
             tailOrder.nextOrder = null;
-            tailOrder.parentLimit.tailOrder = tailOrder;
+            //tailOrder.parentLimit.tailOrder = tailOrder;
             return 1;
         }
         order.prevOrder.nextOrder = order.nextOrder;
         order.nextOrder.prevOrder = order.prevOrder;
         
         return 1;
+    }
+    
+    public Order getHead() {
+        return headOrder;
     }
 }
