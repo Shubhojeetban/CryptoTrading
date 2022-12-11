@@ -8,7 +8,7 @@ public class Order {
     int idNumber;
     boolean buyOrSell;
     double cryptos;
-    int limit;
+    //int limit;
     int entryTime;
     int eventTime;
     Order nextOrder;

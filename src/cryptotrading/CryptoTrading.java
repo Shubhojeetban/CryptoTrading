@@ -195,60 +195,106 @@ public class CryptoTrading {
 //                        System.exit(0);
 //                }
 //            }
-              LimitTree limit = new LimitTree();
-              
-              Limit l1 = new Limit();
-              l1.leftChild = null;
-              l1.rightChild = null;
-              l1.parent = null;
-              l1.size = 0;
-              l1.limitPrice = 0.3;
-              l1.totalVolume = 0.2;
-              
-              Limit l2 = new Limit();
-              l2.leftChild = null;
-              l2.rightChild = null;
-              l2.parent = null;
-              l2.size = 0;
-              l2.limitPrice = 0.2;
-              l2.totalVolume = 0.2;
-              
-              Limit l3 = new Limit();
-              l3.leftChild = null;
-              l3.rightChild = null;
-              l3.parent = null;
-              l3.size = 0;
-              l3.limitPrice = 0.5;
-              l3.totalVolume = 0.2;
-              
-              Limit l4 = new Limit();
-              l4.leftChild = null;
-              l4.rightChild = null;
-              l4.parent = null;
-              l4.size = 0;
-              l4.limitPrice = 0.4;
-              l4.totalVolume = 0.2;
-              
-              
-              limit.insert(l1);
-              limit.insert(l2);
-              limit.insert(l3);
-              limit.insert(l4);
-              
-              // List<Limit> list = limit.getAllLimitsInAsc();
-              List<Limit> list = limit.getAllLimitsInAsc();
-              for(Limit l : list) 
-              {
-                  System.out.print(l.limitPrice+" ");
-              }
-              System.out.println();
-              limit.deleteLimit(l2);
-              
-              list = limit.getAllLimitsInAsc();
-              for(Limit l : list) 
-              {
-                  System.out.print(l.limitPrice+" ");
-              }
+//              LimitTree limit = new LimitTree();
+//              
+//              Limit l1 = new Limit();
+//              l1.leftChild = null;
+//              l1.rightChild = null;
+//              l1.parent = null;
+//              l1.size = 0;
+//              l1.limitPrice = 0.3;
+//              l1.totalVolume = 0.2;
+//              
+//              Limit l2 = new Limit();
+//              l2.leftChild = null;
+//              l2.rightChild = null;
+//              l2.parent = null;
+//              l2.size = 0;
+//              l2.limitPrice = 0.2;
+//              l2.totalVolume = 0.2;
+//              
+//              Limit l3 = new Limit();
+//              l3.leftChild = null;
+//              l3.rightChild = null;
+//              l3.parent = null;
+//              l3.size = 0;
+//              l3.limitPrice = 0.5;
+//              l3.totalVolume = 0.2;
+//              
+//              Limit l4 = new Limit();
+//              l4.leftChild = null;
+//              l4.rightChild = null;
+//              l4.parent = null;
+//              l4.size = 0;
+//              l4.limitPrice = 0.4;
+//              l4.totalVolume = 0.2;
+//              
+//              
+//              limit.insert(l1);
+//              limit.insert(l2);
+//              limit.insert(l3);
+//              limit.insert(l4);
+//              
+//              // List<Limit> list = limit.getAllLimitsInAsc();
+//              List<Limit> list = limit.getAllLimitsInAsc();
+//              for(Limit l : list) 
+//              {
+//                  System.out.print(l.limitPrice+" ");
+//              }
+//              System.out.println();
+//              limit.deleteLimit(l2);
+//              
+//              list = limit.getAllLimitsInAsc();
+//              for(Limit l : list) 
+//              {
+//                  System.out.print(l.limitPrice+" ");
+//              }
+
+                
+                TradingMachine tm = new TradingMachine();
+                tm.addNewBook("btc");
+                
+                Request req1 = new Request();
+                req1.pairSymbol = "btc";
+                req1.buyOrSell = true;
+                req1.limitPrice = 10.0;
+                req1.Cryptos = 12;
+                req1.pairSymbol = "btc";
+                
+                Request req2 = new Request();
+                req2.pairSymbol = "btc";
+                req2.buyOrSell = true;
+                req2.limitPrice = 8.0;
+                req2.Cryptos = 7;
+                req2.pairSymbol = "btc";
+                
+                Request req3 = new Request();
+                req3.pairSymbol = "btc";
+                req3.buyOrSell = false;
+                req3.limitPrice = 10.0;
+                req3.Cryptos = 2;
+                req3.pairSymbol = "btc";
+                
+                Request req4 = new Request();
+                req4.pairSymbol = "btc";
+                req4.buyOrSell = true;
+                req4.limitPrice = 9.0;
+                req4.Cryptos = 11;
+                req4.pairSymbol = "btc";
+                
+                Request req5 = new Request();
+                req5.pairSymbol = "btc";
+                req5.buyOrSell = false;
+                req5.limitPrice = 9.0;
+                req5.Cryptos = 12;
+                req5.pairSymbol = "btc";
+                
+                tm.addRequest(req1);
+                tm.addRequest(req2);
+                tm.addRequest(req3);
+                tm.addRequest(req4);
+                tm.addRequest(req5);
+                
         } catch (Exception e) {
             e.printStackTrace();
         }

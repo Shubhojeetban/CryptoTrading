@@ -80,19 +80,19 @@ public class LimitTree {
             limit.parent = root;
             root.rightChild = insertRec(root.rightChild, limit);
         }
-
+        
         return root;
     }
 
     public Limit deleteLimit(Limit limit) {
-        Limit result = deleteRec(root, limit.limitPrice);
+        root = deleteRec(root, limit.limitPrice);
         if (limit == smallestLimit) {
             smallestLimit = findSmallestLimit(root);
         }
         if(limit == highestLimit) {
             highestLimit = findHighestLimit(root);
         }
-        return result;
+        return root;
     }
 
     private Limit deleteRec(Limit root, double limitPrice) {

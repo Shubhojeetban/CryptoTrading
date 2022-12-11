@@ -23,6 +23,8 @@ public class OrderList {
             order.prevOrder = tailOrder;
             tailOrder = order;
         }
+        order.parentLimit.totalVolume += order.cryptos;
+        order.parentLimit.size += 1;
     }
 
     // return 0 when the list is empty -> so that the limit could be deleted
@@ -47,7 +49,8 @@ public class OrderList {
         }
         order.prevOrder.nextOrder = order.nextOrder;
         order.nextOrder.prevOrder = order.prevOrder;
-        
+        order.parentLimit.totalVolume -= order.cryptos;
+        order.parentLimit.size -= 1;
         return 1;
     }
     

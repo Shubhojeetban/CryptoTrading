@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package cryptotrading;
 
 import java.util.HashMap;
@@ -37,26 +32,39 @@ public class TradingMachine {
         Book book = bookMap.get(request.pairSymbol);
 
         if (request.buyOrSell) {
-            Limit lowestSell = book.lowestSell;
+            Limit lowestSell = book.sellTree.getSmallestLimit();
             LimitTree limitTree = book.sellTree;
-            if (request.limitPrice > lowestSell.limitPrice) {
+            if (lowestSell != null && request.limitPrice >= lowestSell.limitPrice) {
                 // start trading
-                while (request.Cryptos != 0 && request.limitPrice > lowestSell.limitPrice) {
+                while (request.Cryptos != 0 && lowestSell != null && request.limitPrice >= lowestSell.limitPrice) {
                     if (lowestSell.totalVolume <= request.Cryptos) {
                         limitTree.deleteLimit(lowestSell);
-                        request.Cryptos = request.Cryptos - lowestSell.totalVolume;
+                        // request.Cryptos = request.Cryptos - lowestSell.totalVolume;
+                        System.out.println("**** Sell *****");
+                        System.out.println("Price: " + request.limitPrice);
+                        System.out.println("Order Price: " + lowestSell.limitPrice);
+                        System.out.println("Cryptos: " + lowestSell.totalVolume);
                         lowestSell = limitTree.getSmallestLimit();
                     } else {
                         OrderList orderList = lowestSell.order;
-                        while(request.Cryptos > 0) {
+                        int isOrderEmpty = 1;
+                        while (request.Cryptos > 0) {
                             Order order = orderList.getHead();
-                            if(order.cryptos > request.Cryptos) {
-                                order.cryptos = order.cryptos - request.Cryptos;
-                                lowestSell.totalVolume = lowestSell.totalVolume - request.Cryptos;
-                            } else {
-                                orderList.deleteOrder(order);
+                            if (order.cryptos <= request.Cryptos) {
+                                isOrderEmpty = orderList.deleteOrder(order);
                                 request.Cryptos = request.Cryptos - order.cryptos;
                                 lowestSell.totalVolume = lowestSell.totalVolume - order.cryptos;
+                            } else {
+                                order.cryptos = order.cryptos - request.Cryptos;
+                                lowestSell.totalVolume = lowestSell.totalVolume - request.Cryptos;
+                                request.Cryptos = 0;
+                            }
+                            System.out.println("**** Sell *****");
+                            System.out.println("Request Price: " + request.limitPrice);
+                            System.out.println("Order Price: " + lowestSell.limitPrice);
+                            System.out.println("Cryptos: " + order.cryptos);
+                            if(isOrderEmpty == 0) {
+                                limitTree.deleteLimit(lowestSell);
                             }
                         }
                     }
@@ -66,24 +74,92 @@ public class TradingMachine {
                 addToQueue(request, book);
             }
         } else {
-            Limit highestBuy = book.highestBuy;
-            if (request.limitPrice < highestBuy.limitPrice) {
+            Limit highestBuy = book.buyTree.getHighestLimit();
+            LimitTree limitTree = book.buyTree;
+            if (highestBuy != null && request.limitPrice <= highestBuy.limitPrice) {
                 // start trading
+                while (request.Cryptos != 0 && highestBuy != null && request.limitPrice <= highestBuy.limitPrice) {
+                    if (highestBuy.totalVolume <= request.Cryptos) {
+                        limitTree.deleteLimit(highestBuy);
+                        // request.Cryptos = request.Cryptos - lowestSell.totalVolume;
+                        System.out.println("**** Buy *****");
+                        System.out.println("Price: " + request.limitPrice);
+                        System.out.println("Order Price: " + highestBuy.limitPrice);
+                        System.out.println("Cryptos: " + highestBuy.totalVolume);
+                        highestBuy = limitTree.getHighestLimit();
+                    } else {
+                        OrderList orderList = highestBuy.order;
+                        while (request.Cryptos > 0) {
+                            Order order = orderList.getHead();
+                            int isOrderEmpty = 1;
+                            if (order.cryptos <= request.Cryptos) {
+                                isOrderEmpty = orderList.deleteOrder(order);
+                                request.Cryptos = request.Cryptos - order.cryptos;
+                                highestBuy.totalVolume = highestBuy.totalVolume - order.cryptos;
+                            } else {
+                                order.cryptos = order.cryptos - request.Cryptos;
+                                highestBuy.totalVolume = highestBuy.totalVolume - request.Cryptos;
+                                request.Cryptos = 0;
+                            }
+                            System.out.println("**** Buy *****");
+                            System.out.println("Price: " + request.limitPrice);
+                            System.out.println("Order Price: " + highestBuy.limitPrice);
+                            System.out.println("Cryptos: " + order.cryptos);
+                            if(isOrderEmpty == 0) {
+                                limitTree.deleteLimit(highestBuy);
+                            }
+                        }
+                    }
+                }
             } else {
                 // add to queue
+                addToQueue(request, book);
             }
         }
     }
-    
+
     public void addToQueue(Request request, Book book) {
-        if(request.buyOrSell) {
-           boolean isLimitExist = book.buyTreeMap.containsKey(request.limitPrice);
-           if(isLimitExist) {
-               // Create a order and add it to the orderlist
-           }
-           else {
-               // Create a limit add to limit tree and also create hte order and add to its order list 
-           }
+        Limit limit;
+        if (request.buyOrSell) {
+            boolean isLimitExist = book.buyTreeMap.containsKey(request.limitPrice);
+
+            if (isLimitExist) {
+                // Create a order and add it to the orderlist
+                limit = book.buyTreeMap.get(request.limitPrice);
+
+            } else {
+                // Create a limit add to limit tree and also create hte order and add to its order list 
+                limit = new Limit();
+                limit.limitPrice = request.limitPrice;
+                limit.totalVolume = 0;
+                limit.size = 0;
+                limit.order = new OrderList();
+                book.buyTree.insert(limit);
+            }
+
+        } else {
+            boolean isLimitExist = book.sellTreeMap.containsKey(request.limitPrice);
+
+            if (isLimitExist) {
+                // Create a order and add it to the orderlist
+                limit = book.sellTreeMap.get(request.limitPrice);
+
+            } else {
+                // Create a limit add to limit tree and also create hte order and add to its order list 
+                limit = new Limit();
+                limit.limitPrice = request.limitPrice;
+                limit.totalVolume = 0;
+                limit.size = 0;
+                limit.order = new OrderList();
+                book.sellTree.insert(limit);
+            }
         }
+        Order order = new Order();
+        order.buyOrSell = request.buyOrSell;
+        order.cryptos = request.Cryptos;
+        // TODO: Enter the entrytime and eventtime
+        order.idNumber = 1; // TODO: Change the id accordingly
+        order.parentLimit = limit;
+        limit.order.insertOrder(order);
     }
 }

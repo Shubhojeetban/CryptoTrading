@@ -1,5 +1,7 @@
 package cryptotrading;
 
+import java.util.HashMap;
+
 /**
  *
  * @author Shubhojeet Banerjee
@@ -7,6 +9,8 @@ package cryptotrading;
 public class Book {
     LimitTree buyTree ;
     LimitTree sellTree ;
-    Limit lowestSell ;
-    Limit highestBuy ;
+    HashMap<Double, Limit> buyTreeMap;
+    HashMap<Double, Limit> sellTreeMap;
+    //Limit lowestSell ;
+    //Limit highestBuy ;
 }
