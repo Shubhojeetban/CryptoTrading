@@ -255,50 +255,100 @@ public class CryptoTrading {
                 tm.addNewBook("btc");
                 
                 Request req1 = new Request();
+                req1.RequestId = "1001";
                 req1.pairSymbol = "btc";
                 req1.buyOrSell = true;
                 req1.limitPrice = 10.0;
                 req1.Cryptos = 12;
-                req1.pairSymbol = "btc";
                 
                 Request req2 = new Request();
+                req2.RequestId = "1002";
                 req2.pairSymbol = "btc";
                 req2.buyOrSell = true;
                 req2.limitPrice = 8.0;
                 req2.Cryptos = 7;
-                req2.pairSymbol = "btc";
                 
                 Request req3 = new Request();
+                req3.RequestId = "1003";
                 req3.pairSymbol = "btc";
                 req3.buyOrSell = false;
                 req3.limitPrice = 10.0;
                 req3.Cryptos = 2;
-                req3.pairSymbol = "btc";
                 
                 Request req4 = new Request();
+                req4.RequestId = "1004";
                 req4.pairSymbol = "btc";
                 req4.buyOrSell = true;
                 req4.limitPrice = 9.0;
                 req4.Cryptos = 11;
-                req4.pairSymbol = "btc";
                 
                 Request req5 = new Request();
+                req5.RequestId = "1005";
                 req5.pairSymbol = "btc";
                 req5.buyOrSell = false;
                 req5.limitPrice = 9.0;
                 req5.Cryptos = 12;
-                req5.pairSymbol = "btc";
                 
-                tm.addRequest(req1);
-                tm.addRequest(req2);
-                tm.addRequest(req3);
-                tm.addRequest(req4);
-                tm.addRequest(req5);
+                List<Response> responses;
                 
+                responses = tm.addRequest(req1);
+                System.out.println("Round 1");
+                responses.stream().forEach(res -> {
+                    System.out.println(res.buyId);
+                    System.out.println(res.sellId);
+                    System.out.println(res.buyPrice);
+                    System.out.println(res.sellPrice);
+                    System.out.println(res.crptosExchange);
+                    System.out.println(res.buyCryptoRemaining);
+                    System.out.println(res.sellCryptoRemaing);
+                });
+                responses = tm.addRequest(req2);
+                System.out.println("Round 2");
+                responses.stream().forEach(res -> {
+                    System.out.println(res.buyId);
+                    System.out.println(res.sellId);
+                    System.out.println(res.buyPrice);
+                    System.out.println(res.sellPrice);
+                    System.out.println(res.crptosExchange);
+                    System.out.println(res.buyCryptoRemaining);
+                    System.out.println(res.sellCryptoRemaing);
+                });
+                responses = tm.addRequest(req3);
+                System.out.println("Round 3");
+                responses.stream().forEach(res -> {
+                    System.out.println(res.buyId);
+                    System.out.println(res.sellId);
+                    System.out.println(res.buyPrice);
+                    System.out.println(res.sellPrice);
+                    System.out.println(res.crptosExchange);
+                    System.out.println(res.buyCryptoRemaining);
+                    System.out.println(res.sellCryptoRemaing);
+                });
+                responses = tm.addRequest(req4);
+                System.out.println("Round 4");
+                responses.stream().forEach(res -> {
+                    System.out.println(res.buyId);
+                    System.out.println(res.sellId);
+                    System.out.println(res.buyPrice);
+                    System.out.println(res.sellPrice);
+                    System.out.println(res.crptosExchange);
+                    System.out.println(res.buyCryptoRemaining);
+                    System.out.println(res.sellCryptoRemaing);
+                });
+                //tm.cancelOrder(req4);
+                responses = tm.addRequest(req5);
+                System.out.println("Round 5");
+                responses.stream().forEach(res -> {
+                    System.out.println(res.buyId);
+                    System.out.println(res.sellId);
+                    System.out.println(res.buyPrice);
+                    System.out.println(res.sellPrice);
+                    System.out.println(res.crptosExchange);
+                    System.out.println(res.buyCryptoRemaining);
+                    System.out.println(res.sellCryptoRemaing);
+                });                
         } catch (Exception e) {
             e.printStackTrace();
-        }
-        
+        }       
     }
-
 }

@@ -1,11 +1,13 @@
  package cryptotrading;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  * @author Shubhojeet Banerjee
  */
 public class OrderList {
-
     private Order headOrder;
     private Order tailOrder;
 
@@ -56,5 +58,28 @@ public class OrderList {
     
     public Order getHead() {
         return headOrder;
+    }
+    
+    public List<Order> getAllOrders() {
+        List<Order> orders = new ArrayList<>();
+        Order temp = headOrder;
+        while(temp != null) {
+            orders.add(temp);
+            temp = temp.nextOrder;
+        }
+        return orders;
+    }
+    
+    public int deleteByOrderId(String id) {
+        Order temp = headOrder;
+        while(temp != null) {
+            if(temp.id.equals(id)) {
+                break;
+            }
+        }
+        if(temp != null) {
+            return deleteOrder(temp);
+        }
+        return 1;
     }
 }

@@ -10,6 +10,7 @@ package cryptotrading;
  * @author Shubhojeet Banerjee
  */
 public class Request {
+    String RequestId;
     double limitPrice;
     String pairSymbol;
     double Cryptos;

@@ -5,7 +5,7 @@ package cryptotrading;
  * @author Shubhojeet Banerjee
  */
 public class Order {
-    int idNumber;
+    String id;
     boolean buyOrSell;
     double cryptos;
     //int limit;
